@@ -37,7 +37,12 @@ async def on_message(message):
     elif message.content[:6] == '!send ' and message.guild == None:
         for guild in client.guilds:
             if guild.get_member(message.author.id) is not None:
-                await guild.text_channels[0].send(message.content[6:])
+                for i in range(len(guild.text_channels)):
+                    try:
+                        await guild.text_channels[i].send(message.content[6:])
+                        break
+                    except:
+                        print("no permissions")
         await message.channel.send("message sent") 
 
 client.run(TOKEN)
