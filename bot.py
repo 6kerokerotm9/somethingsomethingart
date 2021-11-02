@@ -42,7 +42,7 @@ async def on_message(message):
                         await guild.text_channels[i].send(message.content[6:])
                         break
                     except:
-                        print("no permissions")
+                        continue 
         await message.channel.send("message sent") 
 
 client.run(TOKEN)
