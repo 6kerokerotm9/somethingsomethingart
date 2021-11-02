@@ -1,6 +1,6 @@
 # bot.py
 import discord
-import json
+import validators
 import os
 from dotenv import load_dotenv
 
@@ -46,12 +46,15 @@ async def on_message(message):
         await direct_message(message.author.name, message)
 
     elif message.content[:6] == '!send ' and message.guild == None:
-        for guild in message.author.mutual_guilds:
-            index = await findChannel(guild.text_channels, 0) #find indexes of art channels
-            if index != -1:
-                await guild.text_channels[index].send("from user " f"{message.author.name}: " + message.content[6:])
-            else:
-                await message.channel.send("Server " f"{guild} does not have an art channel. Please contact the dev if you actually see this") 
-        await message.channel.send("art sent") 
+        if(validators.url(message.content[6:])):
+            for guild in message.author.mutual_guilds:
+                index = await findChannel(guild.text_channels, 0) #find indexes of art channels
+                if index != -1:
+                    await guild.text_channels[index].send("from user " f"{message.author.name}: " + message.content[6:])
+                else:
+                    await message.channel.send("Server " f"{guild} does not have an art channel. Please contact the dev if you actually see this") 
+            await message.channel.send("art sent") 
+        else:
+            await message.channel.send("Invalid link sent, please check your message and try again.") 
 
 client.run(TOKEN)
