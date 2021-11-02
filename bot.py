@@ -49,7 +49,7 @@ async def on_message(message):
         for guild in message.author.mutual_guilds:
             index = await findChannel(guild.text_channels, 0) #find indexes of art channels
             if index != -1:
-                await guild.text_channels[index].send(message.content[6:])
+                await guild.text_channels[index].send("from user " f"{message.author.name}: " + message.content[6:])
             else:
                 await message.channel.send("Server " f"{guild} does not have an art channel. Please contact the dev if you actually see this") 
         await message.channel.send("art sent") 
