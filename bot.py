@@ -46,7 +46,7 @@ async def on_message(message):
         await direct_message(message.author.name, message)
 
     elif message.content[:6] == '!send ' and message.guild == None:
-        if(validators.url(message.content[6:])):
+        if(validators.url(message.content[6:])): #check to see if the user inserts a link and no other input
             for guild in message.author.mutual_guilds:
                 index = await findChannel(guild.text_channels, 0) #find indexes of art channels
                 if index != -1:
